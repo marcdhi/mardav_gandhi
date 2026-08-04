@@ -94,7 +94,7 @@ export function Hero() {
           >
             <Spark className="mx-auto h-[9rem] w-full max-w-sm cursor-grab active:cursor-grabbing sm:h-[16rem] lg:h-[30rem] lg:max-w-none" />
             <p className="mono mt-2 text-center text-[0.68rem] text-ink-faint lg:mt-0">
-              <span className="hidden lg:inline">drag it, it spins</span>
+              <span className="hidden lg:inline">it is watching. drag to spin, click to startle</span>
             </p>
           </motion.div>
         </div>

@@ -246,6 +246,44 @@ textarea:focus-visible {
 }
 
 /* ---------------------------------------------------------------------------
+   THE MARK, FLAT VERSION
+   Mobile and reduced-motion visitors get the same character as the 3D hero,
+   for the price of two keyframes.
+--------------------------------------------------------------------------- */
+
+@keyframes mark-blink {
+  0%,
+  91%,
+  94.5%,
+  100% {
+    transform: scaleY(1);
+  }
+  92.6% {
+    transform: scaleY(0.07);
+  }
+}
+
+@keyframes mark-float {
+  0%,
+  100% {
+    transform: translateY(-2%) rotate(-1.5deg);
+  }
+  50% {
+    transform: translateY(2%) rotate(1.5deg);
+  }
+}
+
+.mark-float {
+  animation: mark-float 7s ease-in-out infinite;
+}
+
+.mark-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mark-blink 6.5s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------------
    MARQUEE
 --------------------------------------------------------------------------- */
 

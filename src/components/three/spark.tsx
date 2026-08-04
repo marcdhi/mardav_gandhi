@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { Mark } from "@/components/mark";
+import { MarkFace } from "@/components/mark-face";
 
 const SparkScene = dynamic(() => import("@/components/three/spark-scene"), {
   ssr: false,
@@ -39,7 +39,7 @@ export function Spark({ className }: { className?: string }) {
     return (
       <div className={className}>
         <div className="grid h-full w-full place-items-center">
-          <Mark className="h-20 w-20 text-accent sm:h-32 sm:w-32" />
+          <MarkFace className="h-24 w-24 text-accent sm:h-36 sm:w-36" />
         </div>
       </div>
     );

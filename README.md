@@ -64,6 +64,22 @@ the whole site, including the 3D mark, follows. Nothing else hardcodes a colour.
 four short. The SVG logo, the favicon and the extruded 3D object in the hero all
 read from the same numbers, so they can never disagree.
 
+At hero size it has a face and some behaviour:
+
+| it does this            | when                                    |
+| ----------------------- | --------------------------------------- |
+| follows the cursor      | you move the mouse anywhere on the page |
+| blinks, sometimes twice | every few seconds, at random            |
+| goes wide eyed and hops | you click it                            |
+| screws its eyes shut    | you drag it fast enough to spin         |
+| settles back to face you| a spin runs out                         |
+| droops and slows down   | six seconds with no interaction         |
+
+The logo, favicon and section bullets stay faceless. Identity at 16px is the
+silhouette; personality only shows up when the thing is big enough to have one.
+`MarkFace` is the flat version, blinking in CSS, used on mobile and under
+`prefers-reduced-motion`.
+
 ### Performance notes
 
 The 3D hero only mounts on screens at least 1024px wide with a fine pointer, and
