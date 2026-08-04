@@ -1,0 +1,417 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   THEME TOKENS
+   Everything visual routes through these. Swapping the palette means editing
+   this block and nothing else.
+   Current theme: "Paper and Clay"
+--------------------------------------------------------------------------- */
+
+:root {
+  /* surfaces */
+  --paper: #f4f1ea;
+  --paper-raised: #faf8f4;
+  --paper-sunk: #eae5db;
+
+  /* ink */
+  --ink: #17150f;
+  --ink-muted: #6a6357;
+  --ink-faint: #9c9485;
+
+  /* lines */
+  --line: rgba(23, 21, 15, 0.12);
+  --line-soft: rgba(23, 21, 15, 0.06);
+  --line-strong: rgba(23, 21, 15, 0.24);
+
+  /* accent */
+  --accent: #c4562f;
+  --accent-soft: rgba(196, 86, 47, 0.1);
+  --accent-ink: #ffffff;
+
+  /* geometry */
+  --radius: 2px;
+  --shell: 76rem;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #0d0c0a;
+  --paper-raised: #16140f;
+  --paper-sunk: #070706;
+
+  --ink: #ece7dc;
+  --ink-muted: #948c7d;
+  --ink-faint: #5f594e;
+
+  --line: rgba(236, 231, 220, 0.14);
+  --line-soft: rgba(236, 231, 220, 0.07);
+  --line-strong: rgba(236, 231, 220, 0.28);
+
+  --accent: #e0714a;
+  --accent-soft: rgba(224, 113, 74, 0.14);
+  --accent-ink: #17150f;
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-sunk: var(--paper-sunk);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-display: var(--font-display), Georgia, "Times New Roman", serif;
+}
+
+/* ---------------------------------------------------------------------------
+   BASE
+--------------------------------------------------------------------------- */
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* Text inputs signal focus through their own container instead */
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
+* {
+  scrollbar-color: var(--line-strong) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border: 3px solid var(--paper);
+  border-radius: 99px;
+}
+
+/* ---------------------------------------------------------------------------
+   TYPE PRIMITIVES
+--------------------------------------------------------------------------- */
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 400;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------------------
+   THEME TOGGLE INDICATOR
+   Driven by the attribute rather than React state, so it is correct on the
+   very first paint.
+--------------------------------------------------------------------------- */
+
+.theme-dot {
+  transform: translateX(-50%);
+  transition: transform 0.5s var(--ease-out);
+}
+
+:root[data-theme="dark"] .theme-dot {
+  transform: translateX(0%);
+}
+
+/* ---------------------------------------------------------------------------
+   RULED PAPER + GRAIN
+--------------------------------------------------------------------------- */
+
+.ruled {
+  background-image:
+    linear-gradient(to right, var(--line-soft) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line-soft) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+:root[data-theme="dark"] .grain {
+  mix-blend-mode: screen;
+  opacity: 0.05;
+}
+
+/* ---------------------------------------------------------------------------
+   LINK UNDERLINE
+--------------------------------------------------------------------------- */
+
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  color: inherit;
+  text-decoration: none;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.1em;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.link-static::after {
+  transform: scaleX(1);
+  transform-origin: left;
+  opacity: 0.3;
+}
+
+.link-static:hover::after {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   MARQUEE
+--------------------------------------------------------------------------- */
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: drift 60s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ---------------------------------------------------------------------------
+   PROSE (for /writing)
+--------------------------------------------------------------------------- */
+
+.prose {
+  color: var(--ink);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.prose > * + * {
+  margin-top: 1.35em;
+}
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-top: 2.4em;
+  margin-bottom: -0.4em;
+}
+
+.prose h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin-top: 2em;
+  margin-bottom: -0.5em;
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.25rem;
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.25rem;
+}
+
+.prose ul {
+  list-style: none;
+}
+
+.prose ul > li {
+  position: relative;
+}
+
+.prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  border-radius: 99px;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li + li {
+  margin-top: 0.45em;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--paper-sunk);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+}
+
+.prose pre {
+  background: var(--paper-sunk);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.prose img {
+  border-radius: 4px;
+  border: 1px solid var(--line);
+  max-width: 100%;
+  height: auto;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 3em 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+/* ---------------------------------------------------------------------------
+   REDUCED MOTION
+--------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

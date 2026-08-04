@@ -1,0 +1,33 @@
+---
+title: The title of the post
+summary: One or two lines that show up in the index.
+date: 2026-08-04
+tags: [engineering, notes]
+draft: false
+---
+
+Copy this file, rename it to something like `my-post.mdx`, and the site picks it
+up automatically. The filename becomes the URL, so `my-post.mdx` lands at
+`/writing/my-post`.
+
+Files starting with an underscore are ignored, which is why this one never
+shows up in the index.
+
+## Frontmatter
+
+Only `title` is really needed. `summary`, `date`, `tags` and `draft` are all
+optional. Setting `draft: true` keeps a post visible while running `npm run dev`
+and hidden in the deployed build.
+
+## What you can write
+
+Plain Markdown works: headings, **bold**, *italic*, [links](https://example.com),
+lists, tables, block quotes and code.
+
+```ts
+const posts = getPosts();
+```
+
+> Pull quotes look like this.
+
+Since these are MDX files, JSX works too if a post ever needs something custom.
